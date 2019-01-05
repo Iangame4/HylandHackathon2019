@@ -2,6 +2,7 @@ package hyland2019.blackmirror;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Rating;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -19,21 +20,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import static hyland2019.blackmirror.Util.hex2Byte;
 
 public class MainActivity extends AppCompatActivity implements SendListener{
     private TextView txtReceive;
-    private Button btnSend;
     private NfcAdapter nfcAdapter;
     private Handler h;
     private Runnable r;
     private Intent intent;
     private int count = 0;
     private ReaderCB cb;
+    private RatingBar yourBar;
+    private RatingBar theirBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         view.setBackgroundColor(Color.GRAY);
         HostApdu.registerListener(this);
         txtReceive = findViewById(R.id.txtRecieve);
-        btnSend = findViewById(R.id.btnSend);
+        theirBar = findViewById(R.id.theirBar);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcAdapter.enableReaderMode(this, new ReaderCB(), NfcAdapter.FLAG_READER_NFC_A, null);
     }
@@ -70,13 +74,6 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.knowyourstars, menu);
-        return true;
-    }
-
     public void send(View v){
         //txtReceive.setText(HostApdu.getRes());
         nfcAdapter.disableReaderMode(this);
@@ -92,4 +89,11 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         nfcAdapter.enableReaderMode(this, cb, NfcAdapter.FLAG_READER_NFC_A, null);
         System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
+
+    public void sendRating(View v){
+        //sends the rating
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        theirBar.setVisibility(View.INVISIBLE);
+    }
+
 }
