@@ -20,16 +20,61 @@
     <Button
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="148dp"
-        android:layout_marginBottom="152dp"
         android:onClick="send"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRecieve" />
+
+    <RatingBar
+        android:id="@+id/yourBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="66dp"
+        android:isIndicator="true"
+        android:rating="3.5"
+        android:stepSize="0.5"
+        app:layout_constraintBottom_toTopOf="@+id/txtRecieve"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <RatingBar
+        android:id="@+id/theirBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="71dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="63dp"
+        android:stepSize="0.5"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSend" />
+
+    <Button
+        android:id="@+id/sendRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="147dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="sendRating"
+        android:text="Rate!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/theirBar" />
 
 </android.support.constraint.ConstraintLayout>
