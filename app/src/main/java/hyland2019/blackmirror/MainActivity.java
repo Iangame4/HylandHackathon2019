@@ -25,48 +25,50 @@ import java.io.IOException;
 
 import static hyland2019.blackmirror.Util.hex2Byte;
 
-public class MainActivity extends AppCompatActivity implements NfcAdapter.ReaderCallback, SendListener{
+public class MainActivity extends AppCompatActivity implements SendListener{
     private TextView txtReceive;
     private Button btnSend;
     private NfcAdapter nfcAdapter;
     private Handler h;
     private Runnable r;
     private Intent intent;
+    private int count = 0;
+    private ReaderCB cb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cb = new ReaderCB();
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.GRAY);
         HostApdu.registerListener(this);
         txtReceive = findViewById(R.id.txtRecieve);
         btnSend = findViewById(R.id.btnSend);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        nfcAdapter.enableReaderMode(this, this, NfcAdapter.FLAG_READER_NFC_A, null);
+        nfcAdapter.enableReaderMode(this, new ReaderCB(), NfcAdapter.FLAG_READER_NFC_A, null);
     }
 
-    @Override
-    public void onTagDiscovered(Tag tag) {
-        IsoDep dep = IsoDep.get(tag);
-        try {
-            dep.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            final byte[] res = dep.transceive(hex2Byte("00A4040007A0000002471001"));
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    txtReceive.setText(Util.byte2hex(res));
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
+    protected class ReaderCB implements NfcAdapter.ReaderCallback{
+
+        @Override
+        public void onTagDiscovered(Tag tag) {
+            IsoDep dep = IsoDep.get(tag);
+            try {
+                dep.connect();
+                final byte[] res = dep.transceive(hex2Byte("00A4040007A0000002471001"));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtReceive.setText(Util.byte2hex(res));
+                    }
+                });
+                dep.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     public void hasSent() {
         //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
         stopService(intent);
-        nfcAdapter.enableReaderMode(this, this, NfcAdapter.FLAG_READER_NFC_A, null);
+        nfcAdapter.enableReaderMode(this, cb, NfcAdapter.FLAG_READER_NFC_A, null);
         System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 }
