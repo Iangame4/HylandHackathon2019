@@ -3,6 +3,8 @@ package hyland2019.blackmirror;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 
 import static hyland2019.blackmirror.Util.byte2hex;
@@ -15,6 +17,7 @@ public class HostApdu extends HostApduService {
 
     @Override
     public byte[] processCommandApdu(byte[] bytes, Bundle bundle){
+        send = SignIn.ID;
         list.hasSent("");
         return hex2Byte(Integer.toHexString(send));
     }

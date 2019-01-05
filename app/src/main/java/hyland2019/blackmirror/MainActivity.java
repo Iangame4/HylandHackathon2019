@@ -26,6 +26,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static hyland2019.blackmirror.Util.byte2hex;
 import static hyland2019.blackmirror.Util.hex2Byte;
 
 public class MainActivity extends AppCompatActivity implements SendListener{
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SendListener{
     private RatingBar theirBar;
     private Button rteSend;
     private TextView r8txt;
+    private final String HEX_CONNECT = "00A4040007A0000002471001";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +63,15 @@ public class MainActivity extends AppCompatActivity implements SendListener{
             IsoDep dep = IsoDep.get(tag);
             try {
                 dep.connect();
-                final byte[] res = dep.transceive(hex2Byte("00A4040007A0000002471001"));
+                byte[] res = dep.transceive(hex2Byte(HEX_CONNECT));
+                final int id = Integer.parseInt(byte2hex(res), 16);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        txtReceive.setText(Util.byte2hex(res));
                         rteSend.setVisibility(View.VISIBLE);
                         theirBar.setVisibility(View.VISIBLE);
                         r8txt.setVisibility(View.VISIBLE);
+                        txtReceive.setText(Integer.toString(id));
                     }
                 });
                 dep.close();
@@ -91,9 +94,8 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         nfcAdapter.enableReaderMode(this, cb, NfcAdapter.FLAG_READER_NFC_A, null);
     }
 
+    //Sends the rating
     public void sendRating(View v){
-        //sends the rating
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         theirBar.setVisibility(View.INVISIBLE);
         rteSend.setVisibility(View.INVISIBLE);
         r8txt.setVisibility(View.INVISIBLE);
