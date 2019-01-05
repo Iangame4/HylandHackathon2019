@@ -1,6 +1,7 @@
 package hyland2019.blackmirror;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -14,11 +15,15 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+
+import static hyland2019.blackmirror.Util.hex2Byte;
 
 public class MainActivity extends AppCompatActivity implements NfcAdapter.ReaderCallback, SendListener{
     private TextView txtReceive;
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.GRAY);
         HostApdu.registerListener(this);
         txtReceive = findViewById(R.id.txtRecieve);
         btnSend = findViewById(R.id.btnSend);
@@ -39,22 +46,8 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
         nfcAdapter.enableReaderMode(this, this, NfcAdapter.FLAG_READER_NFC_A, null);
     }
 
-    public void send(View v){
-        //txtReceive.setText(HostApdu.getRes());
-        nfcAdapter.disableReaderMode(this);
-        //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
-        intent = new Intent(this, HostApdu.class);
-        startService(intent);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     @Override
     public void onTagDiscovered(Tag tag) {
-        System.out.println("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNn");
         IsoDep dep = IsoDep.get(tag);
         try {
             dep.connect();
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
             e.printStackTrace();
         }
         try {
-            final byte[] res = dep.transceive(Util.hex2Byte("00A4040007A0000002471001"));
+            final byte[] res = dep.transceive(hex2Byte("00A4040007A0000002471001"));
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -72,7 +65,22 @@ public class MainActivity extends AppCompatActivity implements NfcAdapter.Reader
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //nfcAdapter.disableReaderMode(this);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.knowyourstars, menu);
+        return true;
+    }
+
+    public void send(View v){
+        //txtReceive.setText(HostApdu.getRes());
+        nfcAdapter.disableReaderMode(this);
+        //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+        intent = new Intent(this, HostApdu.class);
+        startService(intent);
     }
 
     @Override
