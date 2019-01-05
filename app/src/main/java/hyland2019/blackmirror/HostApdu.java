@@ -15,16 +15,7 @@ public class HostApdu extends HostApduService {
 
     @Override
     public byte[] processCommandApdu(byte[] bytes, Bundle bundle){
-        //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm");
-        res = "37";
-        try {
-            //res = new String(bytes, "utf-8");
-            String t = byte2hex(bytes);
-            //t = t.substring(0, t.length());
-            res = t;
-        } catch(Exception e){
-        }
-        list.hasSent();
+        list.hasSent("");
         return hex2Byte(Integer.toHexString(send));
     }
 

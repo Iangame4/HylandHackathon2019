@@ -31,10 +31,7 @@ import static hyland2019.blackmirror.Util.hex2Byte;
 public class MainActivity extends AppCompatActivity implements SendListener{
     private TextView txtReceive;
     private NfcAdapter nfcAdapter;
-    private Handler h;
-    private Runnable r;
     private Intent intent;
-    private int count = 0;
     private ReaderCB cb;
     private RatingBar yourBar;
     private RatingBar theirBar;
@@ -71,23 +68,20 @@ public class MainActivity extends AppCompatActivity implements SendListener{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            send(null);
         }
     }
 
     public void send(View v){
-        //txtReceive.setText(HostApdu.getRes());
         nfcAdapter.disableReaderMode(this);
-        //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
         intent = new Intent(this, HostApdu.class);
         startService(intent);
     }
 
     @Override
-    public void hasSent() {
-        //System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
+    public void hasSent(String res) {
         stopService(intent);
         nfcAdapter.enableReaderMode(this, cb, NfcAdapter.FLAG_READER_NFC_A, null);
-        System.out.println("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM");
     }
 
     public void sendRating(View v){
