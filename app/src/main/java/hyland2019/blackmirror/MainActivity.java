@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements SendListener{
     private ReaderCB cb;
     private RatingBar yourBar;
     private RatingBar theirBar;
+    private Button rteSend;
+    private TextView r8txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         HostApdu.registerListener(this);
         txtReceive = findViewById(R.id.txtRecieve);
         theirBar = findViewById(R.id.theirBar);
+        rteSend = findViewById(R.id.sendRating);
+        r8txt = findViewById(R.id.ratetext);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcAdapter.enableReaderMode(this, new ReaderCB(), NfcAdapter.FLAG_READER_NFC_A, null);
     }
@@ -62,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements SendListener{
                     @Override
                     public void run() {
                         txtReceive.setText(Util.byte2hex(res));
+                        rteSend.setVisibility(View.VISIBLE);
+                        theirBar.setVisibility(View.VISIBLE);
+                        r8txt.setVisibility(View.VISIBLE);
                     }
                 });
                 dep.close();
@@ -88,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         //sends the rating
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         theirBar.setVisibility(View.INVISIBLE);
+        rteSend.setVisibility(View.INVISIBLE);
+        r8txt.setVisibility(View.INVISIBLE);
     }
 
 }
