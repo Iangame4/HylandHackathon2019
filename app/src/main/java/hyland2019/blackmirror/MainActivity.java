@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         r8txt.setVisibility(View.INVISIBLE);
         alex.setVisibility(View.INVISIBLE);
         alix.setVisibility(View.INVISIBLE);
-        yourBar.setNumStars(1);
+        yourBar.setNumStars(0);
     }
 
 }

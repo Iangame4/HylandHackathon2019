@@ -103,7 +103,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginEnd="149dp"
         android:layout_marginBottom="13dp"
-        android:text="Danny Novak"
+        android:text="Dan Hercik"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/ratetext"
@@ -124,6 +124,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourBar"
-        app:srcCompat="@drawable/danny" />
+        app:srcCompat="@drawable/albart3" />
 
 </android.support.constraint.ConstraintLayout>
