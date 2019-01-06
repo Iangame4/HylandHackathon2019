@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements SendListener{
     private RatingBar theirBar;
     private Button rteSend;
     private TextView r8txt;
+    private TextView alex;
+    private ImageView alix;
     private final String HEX_CONNECT = "00A4040007A0000002471001";
 
     @Override
@@ -52,7 +55,11 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         rteSend = findViewById(R.id.sendRating);
         r8txt = findViewById(R.id.ratetext);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        alex = findViewById(R.id.Alex);
+        alix = findViewById(R.id.alexpic);
+        yourBar = findViewById(R.id.yourBar);
         nfcAdapter.enableReaderMode(this, new ReaderCB(), NfcAdapter.FLAG_READER_NFC_A, null);
+        System.out.println("READING READING");
     }
 
     protected class ReaderCB implements NfcAdapter.ReaderCallback{
@@ -70,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements SendListener{
                         rteSend.setVisibility(View.VISIBLE);
                         theirBar.setVisibility(View.VISIBLE);
                         r8txt.setVisibility(View.VISIBLE);
+                        alex.setVisibility(View.VISIBLE);
+                        alix.setVisibility(View.VISIBLE);
+
                     }
                 });
                 dep.close();
@@ -84,12 +94,15 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         nfcAdapter.disableReaderMode(this);
         intent = new Intent(this, HostApdu.class);
         startService(intent);
+        System.out.println("SENDING SENDING");
     }
 
     @Override
     public void hasSent(String res) {
         stopService(intent);
         nfcAdapter.enableReaderMode(this, cb, NfcAdapter.FLAG_READER_NFC_A, null);
+        System.out.println("READING READING1");
+
     }
 
     //Sends the rating
@@ -97,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         theirBar.setVisibility(View.INVISIBLE);
         rteSend.setVisibility(View.INVISIBLE);
         r8txt.setVisibility(View.INVISIBLE);
+        alex.setVisibility(View.INVISIBLE);
+        alix.setVisibility(View.INVISIBLE);
+        yourBar.setNumStars(1);
     }
 
 }

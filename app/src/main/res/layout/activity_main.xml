@@ -27,7 +27,6 @@
         android:layout_marginTop="124dp"
         android:layout_marginEnd="72dp"
         android:isIndicator="true"
-        android:rating="3.5"
         android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -95,5 +94,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSend"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/Alex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginBottom="13dp"
+        android:text="Danny Novak"
+        android:textColor="@color/colorAccent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/ratetext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alexpic" />
+
+    <ImageView
+        android:id="@+id/alexpic"
+        android:layout_width="125dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="129dp"
+        android:layout_marginBottom="3dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/Alex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yourBar"
+        app:srcCompat="@drawable/danny" />
 
 </android.support.constraint.ConstraintLayout>
