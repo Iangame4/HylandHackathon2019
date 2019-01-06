@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements SendListener{
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.GRAY);
         HostApdu.registerListener(this);
-        txtReceive = findViewById(R.id.txtRecieve);
         theirBar = findViewById(R.id.theirBar);
         rteSend = findViewById(R.id.sendRating);
         r8txt = findViewById(R.id.ratetext);
@@ -71,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements SendListener{
                         rteSend.setVisibility(View.VISIBLE);
                         theirBar.setVisibility(View.VISIBLE);
                         r8txt.setVisibility(View.VISIBLE);
-                        txtReceive.setText(Integer.toString(id));
                     }
                 });
                 dep.close();
